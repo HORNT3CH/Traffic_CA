@@ -1,0 +1,68 @@
+﻿@model Traffic_CA.Models.DefaultTimes
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DefaultTimes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <input asp-for="StartTime" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Standard" class="control-label"></label>
+                <input asp-for="Standard" class="form-control" />
+                <span asp-validation-for="Standard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SlotDate" class="control-label"></label>
+                <input asp-for="SlotDate" class="form-control" />
+                <span asp-validation-for="SlotDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Scheduled" class="control-label"></label>
+                <input asp-for="Scheduled" class="form-control" />
+                <span asp-validation-for="Scheduled" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OverRide" class="control-label"></label>
+                <input asp-for="OverRide" class="form-control" />
+                <span asp-validation-for="OverRide" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceivingStandard" class="control-label"></label>
+                <input asp-for="ReceivingStandard" class="form-control" />
+                <span asp-validation-for="ReceivingStandard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceivingScheduled" class="control-label"></label>
+                <input asp-for="ReceivingScheduled" class="form-control" />
+                <span asp-validation-for="ReceivingScheduled" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceivingOverRide" class="control-label"></label>
+                <input asp-for="ReceivingOverRide" class="form-control" />
+                <span asp-validation-for="ReceivingOverRide" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

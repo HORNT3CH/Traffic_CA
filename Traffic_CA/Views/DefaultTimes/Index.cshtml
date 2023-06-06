@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Traffic_CA.Models.DefaultTimes>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Standard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Scheduled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OverRide)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceivingStandard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceivingScheduled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceivingOverRide)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Standard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlotDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Scheduled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverRide)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceivingStandard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceivingScheduled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceivingOverRide)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,90 @@
+﻿@model Traffic_CA.Models.Docklot
+
+@{
+    ViewData["Title"] = "CreateDock";
+}
+<br />
+<h1 class="mt-5">Add Trailer to Dock</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateDock">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CarrierName" class="control-label"></label>
+                @Html.DropDownListFor(n => n.CarrierName, ViewBag.Carrier as SelectList, "Select Carrier", new {@class = "form-control"})
+                <span asp-validation-for="CarrierName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrailerNumber" class="control-label"></label>
+                <input asp-for="TrailerNumber" class="form-control" />
+                <span asp-validation-for="TrailerNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dimension" class="control-label">Dimension</label>
+                <select asp-for="Dimension" class="form-control">
+                    <option value="">Select Dimension</option>
+                    <option value="20-LC">20-LC</option>
+                    <option value="40-HC">40-HC</option>
+                    <option value="40-ST">40-ST</option>
+                    <option value="45-FT">45-FT</option>
+                    <option value="48-FT">48-FT</option>
+                    <option value="53-FT">53-FT</option>
+                    <option value="PUP">PUP</option>
+                </select>
+                <span asp-validation-for="Dimension" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrailerComments" class="control-label"></label>
+                <input asp-for="TrailerComments" class="form-control" />
+                <span asp-validation-for="TrailerComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoadNbr" class="control-label"></label>
+                <input asp-for="LoadNbr" class="form-control" readonly />
+                <span asp-validation-for="LoadNbr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocklotDate" class="control-label"></label>
+                <input type="text" asp-for="DocklotDate" class="form-control" value="@DateTime.Now" />
+                <span asp-validation-for="DocklotDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                @Html.DropDownListFor(m => m.Location, ViewBag.Door as SelectList, "Select Dock", new {@class = "form-control"})
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label">Status</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">Select Status</option>
+                    <option value="Empty">Empty</option>
+                    <option value="Full/InComp">Full/InComp</option>
+                    <option value="Full/InFinished">Full/InFinished</option>
+                    <option value="Full/InMixed">Full/InMixed</option>
+                    <option value="Full/OutComp">Full/OutComp</option>
+                    <option value="Full/OutFinished">Full/OutFinished</option>
+                    <option value="Full/OutMixed">Full/OutMixed</option>
+                    <option value="Reserved">Reserved</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Shuttle">Shuttle</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Trailer" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

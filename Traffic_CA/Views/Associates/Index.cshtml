@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Traffic_CA.Models.Associate>
+
+@{
+    ViewData["Title"] = "Associates";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.SearchPager != null)
+    {
+        pager = ViewBag.SearchPager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<div class="d-flex justify-content-between mt-3">
+    <h1 class="mt-5">Associates</h1>
+    <p class="mt-5">
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+</div>
+
+<partial name="_pager" model="@pager" />
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-responsive m-auto">
+        <thead class="header">
+            <tr>
+                <th>
+                    Action Buttons
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AssociateName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AssociateInitials)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShiftNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AssociateUserName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssociateName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssociateInitials)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShiftNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssociateUserName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

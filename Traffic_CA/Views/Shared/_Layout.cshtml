@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Traffic_CA</title>
+    <link href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/spacelab/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Traffic_CA.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Traffic</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Loads" asp-action="Index">Shipping Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Loads" asp-action="Create">Schedule New</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Docklots" asp-action="Index">Docklot</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="ReceivingLoads" asp-action="Index">Receiving Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="ReceivingLoads" asp-action="Create">Receiving Schedule New</a>
+                        </li>
+                        <li class="navbar-nav dropdown flex">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Maintenance
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Associates" asp-action="Index">Associates</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Carriers" asp-action="Index">Carriers</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="States" asp-action="Index">States</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Vendors" asp-action="Index">Vendors</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Coordinators" asp-action="Index">Coordinators</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Loads" asp-action="GetDocklotPrint">Print Docklot</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer bg-primary text-light fixed-bottom">
+        <div class="container">
+            &copy; 2023 - Traffic Hudson - MGA Entertainment
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('#orderDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "mm/dd/yy",
+                yearRange: "-01:+10"
+            });
+        });
+        $(document).ready(function () {
+            $('#receivingOrderDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "mm/dd/yy",
+                yearRange: "-01:+10"
+            });
+        });
+        $(document).ready(function () {
+            $('#pickupDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "mm/dd/yy",
+                yearRange: "-01:+10"
+            });
+        });
+        $(document).ready(function () {
+            $('#stageStart').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#stageStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#stageFinish').click(function () {
+                if ($('#stageLocation').val() == "") {
+                    $('#stageLocationWarning').text('Enter Stage Location!');
+                } else {
+                    var d = new Date();
+                    var output = d.toLocaleDateString('sv', {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric'
+                    })
+                    $('#stageFinishTime').val(output);
+                    var status = 'Staged';
+                    $('#loadStatus').val(status);
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#ltlStageStart').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                });
+                $('#ltlStageStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#ltlStageFinish').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                });
+                $('#ltlStageFinishTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#ltlLoadStart').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                });
+                $('#ltlLoadStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#ltlLoadFinish').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                });
+                $('#ltlLoadFinishTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#loadStart').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#loadStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#arrivalTime').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#arrivalTimeInput').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#loadFinish').click(function () {
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#loadFinishTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#recLoadLiveStart').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recLoadLiveStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#recLoadLiveFinish').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recLoadLiveFinishTime').val(output);
+                $('#recStatus').val('Loaded');
+            });
+        });
+        $(document).ready(function () {
+            $('#recLoadSpotStart').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recLoadSpotStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#recLoadSpotFinish').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recLoadSpotFinishTime').val(output);
+                $('#recStatus').val('Loaded');
+            });
+        });
+        $(document).ready(function () {
+            $('#recUnloadLiveStart').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recUnloadLiveStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#recUnloadLiveFinish').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                });
+                $('#recUnloadLiveFinishTime').val(output);
+                $('#recStatus').val('Unloaded');
+            });
+        });
+        $(document).ready(function () {
+            $('#recUnloadSpotStart').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recUnloadSpotStartTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#recUnloadSpotFinish').on('click', function (e) {
+                e.preventDefault();
+                var d = new Date();
+                var output = d.toLocaleDateString('sv', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })
+                $('#recUnloadSpotFinishTime').val(output);
+            });
+        });
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#alert").hide();
+            }, 3000);
+        });
+        $(document).ready(function () {
+            $('#clearButton').click(function () {
+                $('#search').val("");
+            });
+        });
+        $(document).ready(function () {
+            $('#setLiveAtDock').on('click', function () {
+                $('#loadStatus').val('AtDock');
+            });
+        });
+        $(document).ready(function () {
+            $('#exitLive').on('click', function () {
+                $('#loadStatus').val('Loaded');
+            });
+        });
+        $(document).ready(function () {
+            $('#exitUnloadLive').on('click', function () {
+                $('#recStatus').val('Unloaded');
+            });
+        });
+        $(document).ready(function () {
+            $('#setSpotAtDock').on('click', function () {
+                $('#loadStatus').val('AtDock');
+            });
+        });
+        $(document).ready(function () {
+            $('#exitSpot').on('click', function () {
+                $('#loadStatus').val('Loaded');
+            });
+        });
+        $(document).ready(function () {
+            $('#recSetAtDock').on('click', function (e) {
+                e.preventDefault();
+                $('#recStatus').val('AtDock');
+            });
+        });
+        $(document).ready(function () {
+            $('#lotDockButton').click(function (event) {
+                event.preventDefault();
+                var button = $('#lotDockButton').text();
+                if (button == "New to Dock") {
+                    $('#lotDockButton').text('New to Lot');
+                    $('#door').removeClass('d-none');
+                    $('#lot').addClass('d-none');
+                } else if (button == "New to Lot") {
+                    $('#lotDockButton').text('New to Dock');
+                    $('#lot').removeClass('d-none');
+                    $('#door').addClass('d-none');
+                }
+
+            });
+        });
+        $(document).ready(function () {
+            $('#statusCriteria').on('change', function () {
+                var output = $('#statusCriteria').val();
+                $('#search').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#statusRecCriteria').on('change', function () {
+                var output = $('#statusRecCriteria').val();
+                $('#search').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#statusRecJobCriteria').on('change', function () {
+                var output = $('#statusRecJobCriteria').val();
+                $('#search').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#lotCriteria').on('change', function () {
+                var output = $('#lotCriteria').val();
+                $('#search').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#searchRecDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "mm/dd/yy",
+                yearRange: "-01:+10"
+            });
+        });
+        $(document).ready(function () {
+            $('#searchDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "mm/dd/yy",
+                yearRange: "-01:+10"
+            });
+        });
+        $(document).ready(function () {
+            $('#searchRecDate').on('change', function () {
+                var output = $('#searchRecDate').val();
+                $('#search').val(output);
+            });
+        });
+        $(document).ready(function () {
+            $('#searchDate').on('change', function () {
+                var output = $('#searchDate').val();
+                $('#search').val(output);
+            });
+        });
+        function updateTimeSlots(selectedDate) {
+            $.ajax({
+                url: '@Url.Action("UpdateTimeSlots", "Loads")',
+                data: { selectedDate: selectedDate },
+                success: function (data) {
+                    // Update ViewBag.TimeSlot with the response data
+                    var newTimeSlots = JSON.stringify(data);
+                    '@Html.Raw(ViewBag.TimeSlot = "' + newTimeSlots + '");'
+                    //console.log(data);
+                    var dropdown = $('#TimeSlot');
+                    dropdown.empty();
+                    $.each(data, function (index, item) {
+                        dropdown.append($('<option></option>').val(item.startTime).text(item.startTime));
+                    })
+                }
+            });
+        }
+        function updateRecTimeSlots(selectedDate) {
+            $.ajax({
+                url: '@Url.Action("UpdateRecTimeSlots", "ReceivingLoads")',
+                data: { selectedDate: selectedDate },
+                success: function (data) {
+                    // Update ViewBag.TimeSlot with the response data
+                    var newTimeSlots = JSON.stringify(data);
+                    '@Html.Raw(ViewBag.TimeSlot = "' + newTimeSlots + '");'
+                    //console.log(data);
+                    var dropdown = $('#TimeSlot');
+                    dropdown.empty();
+                    $.each(data, function (index, item) {
+                        dropdown.append($('<option></option>').val(item.startTime).text(item.startTime));
+                    })
+                }
+            });
+        }
+    </script>
+</body>
+</html>

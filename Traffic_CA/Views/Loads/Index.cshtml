@@ -1,0 +1,218 @@
+﻿@model IEnumerable<Traffic_CA.Models.Loads>
+
+@{
+    ViewData["Title"] = "Shipping Schedule";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.SearchPager != null)
+    {
+        pager = ViewBag.SearchPager;
+        pageNo = pager.CurrentPage;
+    }
+}
+<br />
+<h1 class="mt-5">Schedule</h1>
+<div class="d-flex justify-content-between mt-1">
+    <partial name="_pager" model="@pager" />
+    <p class="mt-2">
+        <button id="btnOptions" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#optionsModal">Search Options</button>
+    </p>
+</div>
+
+
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div id="alert" class="alert alert-success position-relative">
+        <strong>Success ! </strong> @TempData["AlertMessage"]
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-responsive m-auto">
+        <thead class="header">
+            <tr>
+                <th class="fit">
+                    Action Buttons
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.PickupDate)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.TimeSlot)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.LoadStatus)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.LoadType)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.NbrCartons)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoadCube)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MBOLNbr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoadNbr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Waved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Door)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.StagerOne)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.LoaderOne)
+                </th>
+                <th class="fit">
+                    @Html.DisplayNameFor(model => model.CarrierName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CoordinatorName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@(item.LoadStatus == "AtDock" ? "bg-info text-light" : null)">
+                    <td class="fit">
+                        @if (item.StageFinish == null && item.LoadStatus != "AtDock" && item.LoadType != "HOTLTL" && item.LoadStatus != "Unload" && item.LoadStatus != "Unloaded" && item.LoadStatus != "Loaded" && item.LoadType != "Unload")
+                        {
+                            <a class="btn btn-sm btn-primary" asp-action="Stage" asp-route-id="@item.Id">Stage</a>
+                            <a class="btn btn-sm btn-danger" asp-action="Reschedule" asp-route-id="@item.Id">Re-Schedule</a>
+                        }
+                        @if (item.LoadFinish == null && item.LoadType == "Live" && item.LoadType != "HOTLTL" && item.LoadStatus != "Unload")
+                        {
+                            <a class="btn btn-sm btn-primary" asp-action="LoadLive" asp-route-id="@item.Id">Load Live</a>
+                        }
+                        else if (item.LoadFinish == null && item.LoadType == "Spot" && item.LoadStatus != "Loaded")
+                        {
+                            <a class="btn btn-sm btn-success" asp-action="LoadSpot" asp-route-id="@item.Id">Load Spot</a>
+                        }
+                        else if (item.LoadType == "Unload")
+                        {
+                            <a class="btn btn-sm btn-info" asp-action="UnloadLive" asp-route-id="@item.Id">Unload Live</a>
+                        }
+                        @if (item.StageFinish != null)
+                        {
+                            <a class="btn btn-sm btn-warning" asp-action="StageSheet" target="_blank" asp-route-id="@item.Id">Stage Sheet</a>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PickupDate)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.TimeSlot)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoadStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoadType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NbrCartons)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoadCube)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MBOLNbr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoadNbr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Waved)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Door)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.StagerOne)
+                    </td>
+                    <td class="@(item.LoaderOne != null ? "text-dark bg-light" : null) fit">
+                        @Html.DisplayFor(modelItem => item.LoaderOne)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.CarrierName)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td class="fit">
+                        @Html.DisplayFor(modelItem => item.CoordinatorName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="optionsModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Selection Options</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Status</label>
+                            <select id="statusCriteria" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="AtDock">At Dock</option>
+                                <option value="Created">Created</option>
+                                <option value="Staged">Staged</option>
+                                <option value="Loaded">Loaded</option>
+                                <option value="Unload">Unload</option>
+                                <option value="Unloaded">Unloaded</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Date</label>
+                            <input id="searchDate" type="text" class="form-control" readonly placeholder="Click here..." />
+                        </div>
+                        <div class="form-group">
+                            <br />
+                            <input type="submit" form="searchForm" class="btn btn-primary form-control" value="Search" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

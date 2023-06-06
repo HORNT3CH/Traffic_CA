@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Traffic_CA.Models.Carriers>
+
+@{
+    ViewData["Title"] = "Carriers";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.SearchPager != null)
+    {
+        pager = ViewBag.SearchPager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<div class="d-flex justify-content-between mt-3">
+    <h1 class="mt-5">Carriers</h1>
+    <p class="mt-5">
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+</div>
+
+<partial name="_pager" model="@pager" />
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-responsive m-auto">
+        <thead class="header">
+            <tr>
+                <th>
+                    Action Buttons
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierSTCC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierContact)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierFax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierEmail)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierSTCC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierContact)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierFax)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierEmail)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

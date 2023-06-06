@@ -1,0 +1,52 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:AssociatesContext"
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:CarriersContext"
+    },
+    "mssql3": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:CitiesContext"
+    },
+    "mssql4": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:CoordinatorsContext"
+    },
+    "mssql5": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:CustomersContext"
+    },
+    "mssql6": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:StatesContext"
+    },
+    "mssql7": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:DefaultTimesContext"
+    },
+    "mssql8": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:DoorsContext"
+    },
+    "mssql9": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:LotsContext"
+    },
+    "mssql10": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:TimeSlotsContext"
+    },
+    "mssql11": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:DocklotsContext"
+    },
+    "mssql12": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:LoadsContext"
+    }
+  }
+}

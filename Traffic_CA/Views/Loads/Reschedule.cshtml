@@ -1,0 +1,137 @@
+﻿@model Traffic_CA.Models.Loads
+
+@{
+    ViewData["Title"] = "Reschedule";
+}
+
+<br />
+<h1 class="mt-5">Reschedule Load</h1>
+
+<hr />
+<form asp-action="Reschedule">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 border border-2 border-dark">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="OrderDate" class="control-label"></label>
+                    <input id="orderDate" onchange="updateTimeSlots(this.value)" asp-for="OrderDate" type="text" class="form-control border bordfer-1 border-danger" readonly />
+                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TimeSlot" class="control-label"></label>
+                    @Html.DropDownListFor(n => n.TimeSlot, (SelectList)ViewBag.timeSlotList, "Select Timeslot", new {@class = "form-control border border-1 border-danger", id="TimeSlot"})
+                    <span asp-validation-for="TimeSlot" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LoadType" class="control-label">Load Type</label>
+                    <select asp-for="LoadType" class="form-control">
+                        <option value="">Select Type</option>
+                        <option value="Live">Live</option>
+                        <option value="Spot">Spot</option>
+                    </select>
+                    <span asp-validation-for="LoadType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MBOLNbr" class="control-label"></label>
+                    <input asp-for="MBOLNbr" class="form-control" readonly />
+                    <span asp-validation-for="MBOLNbr" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="LoadNbr" class="control-label"></label>
+                    <input asp-for="LoadNbr" class="form-control" readonly />
+                    <span asp-validation-for="LoadNbr" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3 border border-2 border-dark">
+                <div class="form-group">
+                    <label asp-for="CustomerName" class="control-label"></label>
+                    <input asp-for="CustomerName" class="form-control" readonly />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" readonly />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="State" class="control-label"></label>
+                    <input asp-for="State" class="form-control" readonly />
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CarrierName" class="control-label"></label>
+                    <input asp-for="CarrierName" class="form-control" readonly />
+                    <span asp-validation-for="CarrierName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NbrCartons" class="control-label"></label>
+                    <input asp-for="NbrCartons" class="form-control" readonly />
+                    <span asp-validation-for="NbrCartons" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3 border border-2 border-dark">
+                <div class="form-group">
+                    <label asp-for="LoadCube" class="control-label"></label>
+                    <input asp-for="LoadCube" class="form-control" readonly />
+                    <span asp-validation-for="LoadCube" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NbrStops" class="control-label"></label>
+                    <input asp-for="NbrStops" class="form-control" readonly />
+                    <span asp-validation-for="NbrStops" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CoordinatorName" class="control-label"></label>
+                    <input asp-for="CoordinatorName" class="form-control" readonly />
+                    <span asp-validation-for="CoordinatorName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Labels" class="control-label">Status</label>
+                    <input asp-for="Labels" class="form-control" readonly />
+                    <span asp-validation-for="Labels" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AppointmentNumber" class="control-label"></label>
+                    <input asp-for="AppointmentNumber" class="form-control" readonly />
+                    <span asp-validation-for="AppointmentNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3 border border-2 border-dark">
+                <div class="form-group">
+                    <label asp-for="Comments" class="control-label"></label>
+                    <input asp-for="Comments" class="form-control" />
+                    <span asp-validation-for="Comments" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PickupDate" class="control-label"></label>
+                    <input id="pickupDate" asp-for="PickupDate" type="text" class="form-control" readonly />
+                    <span asp-validation-for="PickupDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LoadValue" class="control-label"></label>
+                    <input asp-for="LoadValue" class="form-control" readonly />
+                    <span asp-validation-for="LoadValue" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LoadStatus" class="control-label"></label>
+                    <input asp-for="LoadStatus" class="form-control" value="Created" readonly />
+                    <span asp-validation-for="LoadStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group d-none">
+                    <label asp-for="Waved" class="control-label"></label>
+                    <input asp-for="Waved" class="form-control" value="No" readonly />
+                    <span asp-validation-for="Waved" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Reschedule" class="btn btn-primary mt-2" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a class="btn btn-secondary mt-2" asp-controller="Home" asp-action="Index">Cancel</a>
+</div>

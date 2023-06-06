@@ -1,0 +1,20 @@
+﻿@{
+}
+@model Traffic_CA.Models.Loads
+
+@{
+    ViewData["Title"] = "DockLot Print";
+}
+<br />
+
+<h1 class="mt-5">Click Submit to view Docklot Sheet</h1>
+
+<div class="row">
+    <div class="col-md-3">
+        <form asp-action="GetDockLot">
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+    </div>
+</div>
+
+

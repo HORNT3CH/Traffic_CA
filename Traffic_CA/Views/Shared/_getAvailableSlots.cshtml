@@ -1,0 +1,38 @@
+﻿@model AvailableSlots
+
+<h1>Slots</h1>
+
+<table class="table table-bordered table-striped table-responsive m-auto">
+    <thead class="header">
+        <tr>
+            <th>
+                Slot Date
+            </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                Standard
+            </th>
+            <th>
+                Scheduled
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.SlotDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Standard)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Scheduled)
+            </td>
+        </tr>
+    </tbody>
+</table>

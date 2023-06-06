@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Traffic_CA.Models.Docklot>
+
+@{
+    ViewData["Title"] = "Docklot";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.SearchPager != null)
+    {
+        pager = ViewBag.SearchPager;
+        pageNo = pager.CurrentPage;
+    }
+}
+<br />
+<h1 class="mt-5">Docklot</h1>
+<div class="d-flex justify-content-between mt-1">
+    <partial name="_pager" model="@pager" />
+    <p class="mt-2">
+        <button id="btnDockOptions" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#optionsDockLotModal">Search Options</button>
+    </p>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-responsive m-auto">
+        <thead class="header">
+            <tr>
+                <th>
+                    Action Buttons
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarrierName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrailerNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Dimension)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrailerComments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoadNbr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DocklotDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MBOLNbr)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.Status != "LoadInProcess" && item.Status != "RecLoadInProcess" && item.Status != "RecUnloadInProcess" && item.Status != "UnloadInProcess")
+                        {
+                            <a class="btn btn-sm btn-primary" asp-action="LotMove" asp-route-id="@item.Id">Move to Lot</a>
+
+                            <div class="d-inline"> |</div>
+                            <a class="btn btn-sm btn-warning" asp-action="DockMove" asp-route-id="@item.Id">Move to Door</a>
+
+                            <div class="d-inline"> |</div>
+                            <a class="btn btn-sm btn-danger" asp-action="ChangeStatus" asp-route-id="@item.Id">Change Status</a>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarrierName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrailerNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dimension)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrailerComments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoadNbr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocklotDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MBOLNbr)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="optionsDockLotModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Selection Options</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Search By Lot</label>
+                            <select id="lotCriteria" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="LOTA">LOT A</option>
+                                <option value="LOTB">LOT B</option>
+                                <option value="LOTC">LOT C</option>
+                                <option value="LOTD">LOT D</option>
+                                <option value="LOTE">LOT E</option>
+                                <option value="LOTF">LOT F</option>
+                                <option value="LOTG">LOT G</option>
+                                <option value="Drive">Drive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Date</label>
+                            <input id="searchRecDate" type="text" class="form-control" readonly placeholder="Click here..." />
+                        </div>
+                        <div class="form-group">
+                            <br />
+                            <input type="submit" form="searchForm" class="btn btn-primary form-control" value="Search" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

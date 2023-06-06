@@ -1,0 +1,302 @@
+﻿@model Traffic_CA.Models.Loads
+
+@{
+    ViewData["Title"] = "Loading";
+}
+<br />
+<h1 class="mt-5">Loading A Live Load</h1>
+
+<hr />
+<form id="loadLiveForm" asp-action="LoadLive">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group mb-1">
+                    <label asp-for="CustomerName" class="control-label"></label>
+                    <input asp-for="CustomerName" class="form-control" readonly />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" readonly />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="State" class="control-label"></label>
+                    <input asp-for="State" class="form-control" readonly />
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="CarrierName" class="control-label"></label>
+                    <input asp-for="CarrierName" class="form-control" readonly />
+                    <span asp-validation-for="CarrierName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="LoadValue" class="control-label"></label>
+                    <input asp-for="LoadValue" class="form-control" readonly />
+                    <span asp-validation-for="LoadValue" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="LoadNbr" class="control-label"></label>
+                    <input asp-for="LoadNbr" class="form-control" readonly />
+                    <span asp-validation-for="LoadNbr" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="MBOLNbr" class="control-label"></label>
+                    <input asp-for="MBOLNbr" class="form-control" readonly />
+                    <span asp-validation-for="MBOLNbr" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="OrderDate" class="control-label"></label>
+                    <input type="text" asp-for="OrderDate" class="form-control" value="@Model.OrderDate.ToString("d")" readonly />
+                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="TimeSlot" class="control-label"></label>
+                    <input asp-for="TimeSlot" class="form-control" readonly />
+                    <span asp-validation-for="TimeSlot" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="LoadType" class="control-label"></label>
+                    <input asp-for="LoadType" class="form-control" readonly />
+                    <span asp-validation-for="LoadType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="NbrCartons" class="control-label"></label>
+                    <input asp-for="NbrCartons" class="form-control" readonly />
+                    <span asp-validation-for="NbrCartons" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="Comments" class="control-label"></label>
+                    <input asp-for="Comments" class="form-control" readonly />
+                    <span asp-validation-for="Comments" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="LoadCube" class="control-label"></label>
+                    <input asp-for="LoadCube" class="form-control" readonly />
+                    <span asp-validation-for="LoadCube" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="Waved" class="control-label">Waved</label>
+                    <input asp-for="Waved" class="form-control" readonly />
+                    <span asp-validation-for="Waved" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="NbrStops" class="control-label"></label>
+                    <input asp-for="NbrStops" class="form-control" readonly />
+                    <span asp-validation-for="NbrStops" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="CoordinatorName" class="control-label"></label>
+                    <input asp-for="CoordinatorName" class="form-control" readonly />
+                    <span asp-validation-for="CoordinatorName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="LoadStatus" class="control-label"></label>
+                    <input id="loadStatus" asp-for="LoadStatus" class="form-control" readonly />
+                    <span asp-validation-for="LoadStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="Labels" class="control-label"></label>
+                    <input asp-for="Labels" class="form-control" readonly />
+                    <span asp-validation-for="Labels" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="PickupDate" class="control-label"></label>
+                    <input type="text" asp-for="PickupDate" class="form-control" readonly />
+                    <span asp-validation-for="PickupDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="StagerOne" class="control-label"></label>
+                    <input asp-for="StagerOne" class="form-control" readonly />
+                    <span asp-validation-for="StagerOne" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="StagerTwo" class="control-label"></label>
+                    <input asp-for="StagerTwo" class="form-control" readonly />
+                    <span asp-validation-for="StagerTwo" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="StagerThree" class="control-label"></label>
+                    <input asp-for="StagerThree" class="form-control" readonly />
+                    <span asp-validation-for="StagerThree" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark grayed">
+                <div class="form-group mb-1">
+                    <label asp-for="StageLocation" class="control-label"></label>
+                    <input asp-for="StageLocation" class="form-control" readonly />
+                    <span asp-validation-for="StageLocation" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="StageStart" class="control-label"></label>
+                    <input type="text" asp-for="StageStart" class="form-control" readonly />
+                    <span asp-validation-for="StageStart" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-1">
+                    <label asp-for="StageFinish" class="control-label"></label>
+                    <input type="text" asp-for="StageFinish" class="form-control" readonly />
+                    <span asp-validation-for="StageFinish" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark">
+                @if (Model.TrailerNumber == null)
+                {
+                    <p class="text-center">Loader Options NOT Available!</p>
+
+                    <p class="text-center"><strong>Live Trailer MUST BE In A Dock!</strong></p>
+                }
+                else
+                {
+                    <div class="form-group mb-1">
+                        <label asp-for="LoaderOne" class="control-label"></label>
+                        @if (string.IsNullOrEmpty(Model.LoaderOne) && Model.LoaderOne == default(string))
+                        {
+                            @Html.DropDownListFor(m => m.LoaderOne, ViewBag.Loaders as SelectList, "Select Loader", new {@class = "form-control"} )
+                        }
+                        else
+                        {
+                            <input asp-for="LoaderOne" class="form-control" readonly />
+                        }
+                        <span asp-validation-for="LoaderOne" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label asp-for="LoaderTwo" class="control-label"></label>
+                        @if (string.IsNullOrEmpty(Model.LoaderTwo) && Model.LoaderTwo == default(string))
+                        {
+                            @Html.DropDownListFor(m => m.LoaderTwo, ViewBag.Loaders as SelectList, "Select Loader", new {@class = "form-control"} )
+                        }
+                        else
+                        {
+                            <input asp-for="LoaderTwo" class="form-control" readonly />
+                        }
+                        <span asp-validation-for="LoaderTwo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label asp-for="LoaderThree" class="control-label"></label>
+                        @if (string.IsNullOrEmpty(Model.LoaderTwo) && Model.LoaderTwo == default(string))
+                        {
+                            @Html.DropDownListFor(m => m.LoaderThree, ViewBag.Loaders as SelectList, "Select Loader", new {@class = "form-control"} )
+                        }
+                        else
+                        {
+                            <input asp-for="LoaderThree" class="form-control" readonly />
+                        }
+                        <span asp-validation-for="LoaderThree" class="text-danger"></span>
+                    </div>
+                }
+            </div>
+            <div class="col-md-2 border border-2 border-dark">
+                @if (Model.TrailerNumber == null)
+                {
+                    <p class="text-center">Loader Start/Finish Options NOT Available!</p>
+
+                    <p class="text-center"><strong>Live Trailer MUST BE In A Dock!</strong></p>
+                }
+                else
+                {
+                    <div class="form-group mb-1">
+                        <label asp-for="LoadStart" class="control-label"></label>
+                        <input id="loadStartTime" type="text" asp-for="LoadStart" class="form-control" />
+                        <span asp-validation-for="LoadStart" class="text-danger"></span>
+                        <button id="loadStart" class="btn btn-success mt-1" type="button" @(Model.LoadStart != null ? "disabled" : null)>Set Load Start</button>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label asp-for="LoadFinish" class="control-label"></label>
+                        <input id="loadFinishTime" type="text" asp-for="LoadFinish" class="form-control" />
+                        <span asp-validation-for="LoadFinish" class="text-danger"></span>
+                        <button id="loadFinish" class="btn btn-danger mt-1" type="button" @(Model.LoadFinish != null ? "disabled" : null)>Set Load Finish</button>
+                    </div>
+                }
+            </div>
+            <div class="col-md-2 border border-2 border-dark">
+                @if (Model.TrailerNumber != null && Model.Door != null)
+                {
+                    <div class="form-group mb-1">
+                        <label asp-for="TrailerNumber" class="control-label"></label>
+                        <input asp-for="TrailerNumber" class="form-control" readonly />
+                        <span asp-validation-for="TrailerNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label asp-for="Door" class="control-label"></label>
+                        <input asp-for="Door" class="form-control" readonly />
+                        <span asp-validation-for="Door" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group mb-1">
+                        <label asp-for="ArrivalTime" class="control-label"></label>
+                        @if (Model.ArrivalTime != null)
+                        {
+                            <input type="text" asp-for="ArrivalTime" class="form-control" readonly />
+                        }
+                        else
+                        {
+                            <input id="arrivalTimeInput" type="text" asp-for="ArrivalTime" class="form-control" />
+                        }
+
+                        <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+                        <button id="arrivalTime" class="btn btn-success mt-1" type="button" @(Model.ArrivalTime != null ? "disabled" : null)>Set Arrival Time</button>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label asp-for="TrailerNumber" class="control-label"></label>
+                        <input asp-for="TrailerNumber" class="form-control" placeholder="Enter Live Trailer # ..." />
+                        <span asp-validation-for="TrailerNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label asp-for="Door" class="control-label"></label>
+                        @Html.DropDownListFor(m => m.Door, ViewBag.Door as SelectList, "Select Door", new {@class = "form-control"})
+                        <span asp-validation-for="Door" class="text-danger"></span>
+                        <button id="setLiveAtDock" class="btn btn-danger mt-1" type="button" )>Set At Dock</button>
+                    </div>
+                }
+                @if (Model.Door != null)
+                {
+                    <div class="form-group mb-1">
+                        <label asp-for="Lot" class="control-label"></label>
+                        @Html.DropDownListFor(m => m.Lot, ViewBag.Lot as SelectList, "Select Lot", new {@class = "form-control"})
+                        <span asp-validation-for="Lot" class="text-danger"></span>
+                        <button id="exitLive" class="btn btn-danger mt-1" type="button">Exit or Lot</button>
+                    </div>
+                }
+                <div class="form-group mb-1">
+                    <label asp-for="AppointmentNumber" class="control-label" hidden></label>
+                    <input asp-for="AppointmentNumber" class="form-control" hidden />
+                    <span id="setLiveAtDockWarning" asp-validation-for="AppointmentNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2 border border-2 border-dark">
+                <div class="form-group mt-2">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="text-center">
+    <a class="btn btn-secondary mt-2" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
