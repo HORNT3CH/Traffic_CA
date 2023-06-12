@@ -11,14 +11,14 @@ using Traffic_CA.Models;
 
 namespace Traffic_CA.Controllers
 {
-    public class CarriersController : Controller
-    {
-        private readonly CarriersContext _context;
+	public class CarriersController : Controller
+	{
+		private readonly CarriersContext _context;
 
-        public CarriersController(CarriersContext context)
-        {
-            _context = context;
-        }
+		public CarriersController(CarriersContext context)
+		{
+			_context = context;
+		}
 
 		private List<SelectListItem> GetPageSizes(int selectedPageSize = 5)
 		{
@@ -73,135 +73,135 @@ namespace Traffic_CA.Controllers
 
 		// GET: Carriers/Details/5
 		public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Carriers == null)
-            {
-                return NotFound();
-            }
+		{
+			if (id == null || _context.Carriers == null)
+			{
+				return NotFound();
+			}
 
-            var carriers = await _context.Carriers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (carriers == null)
-            {
-                return NotFound();
-            }
+			var carriers = await _context.Carriers
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (carriers == null)
+			{
+				return NotFound();
+			}
 
-            return View(carriers);
-        }
+			return View(carriers);
+		}
 
-        // GET: Carriers/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+		// GET: Carriers/Create
+		public IActionResult Create()
+		{
+			return View();
+		}
 
-        // POST: Carriers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CarrierName,CarrierSTCC,CarrierContact,CarrierPhone,CarrierFax,CarrierEmail")] Carriers carriers)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(carriers);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(carriers);
-        }
+		// POST: Carriers/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create([Bind("Id,CarrierName,CarrierSTCC")] Carriers carriers)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Add(carriers);
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+			return View(carriers);
+		}
 
-        // GET: Carriers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Carriers == null)
-            {
-                return NotFound();
-            }
+		// GET: Carriers/Edit/5
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null || _context.Carriers == null)
+			{
+				return NotFound();
+			}
 
-            var carriers = await _context.Carriers.FindAsync(id);
-            if (carriers == null)
-            {
-                return NotFound();
-            }
-            return View(carriers);
-        }
+			var carriers = await _context.Carriers.FindAsync(id);
+			if (carriers == null)
+			{
+				return NotFound();
+			}
+			return View(carriers);
+		}
 
-        // POST: Carriers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CarrierName,CarrierSTCC,CarrierContact,CarrierPhone,CarrierFax,CarrierEmail")] Carriers carriers)
-        {
-            if (id != carriers.Id)
-            {
-                return NotFound();
-            }
+		// POST: Carriers/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, [Bind("Id,CarrierName,CarrierSTCC")] Carriers carriers)
+		{
+			if (id != carriers.Id)
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(carriers);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CarriersExists(carriers.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(carriers);
-        }
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(carriers);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!CarriersExists(carriers.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Index));
+			}
+			return View(carriers);
+		}
 
-        // GET: Carriers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Carriers == null)
-            {
-                return NotFound();
-            }
+		// GET: Carriers/Delete/5
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null || _context.Carriers == null)
+			{
+				return NotFound();
+			}
 
-            var carriers = await _context.Carriers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (carriers == null)
-            {
-                return NotFound();
-            }
+			var carriers = await _context.Carriers
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (carriers == null)
+			{
+				return NotFound();
+			}
 
-            return View(carriers);
-        }
+			return View(carriers);
+		}
 
-        // POST: Carriers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Carriers == null)
-            {
-                return Problem("Entity set 'CarriersContext.Carriers'  is null.");
-            }
-            var carriers = await _context.Carriers.FindAsync(id);
-            if (carriers != null)
-            {
-                _context.Carriers.Remove(carriers);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+		// POST: Carriers/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			if (_context.Carriers == null)
+			{
+				return Problem("Entity set 'CarriersContext.Carriers'  is null.");
+			}
+			var carriers = await _context.Carriers.FindAsync(id);
+			if (carriers != null)
+			{
+				_context.Carriers.Remove(carriers);
+			}
+			
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 
-        private bool CarriersExists(int id)
-        {
-          return (_context.Carriers?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-    }
+		private bool CarriersExists(int id)
+		{
+		  return (_context.Carriers?.Any(e => e.Id == id)).GetValueOrDefault();
+		}
+	}
 }

@@ -1,18 +1,66 @@
 html {
-  font-size: 14px;
+    font-size: 12px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 14px;
+    }
+    .card {
+        font-size: 10px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.table td.size {
+    width: 200px;
+}
+
+.table-responsive {
+    max-height: 670px;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+}
+
+.grayed {
+    background-color: #EEEEEE;
+}
+
+.close:hover {
+    cursor: pointer;
+}
+
+.modal-dialog,
+.modal-content {
+    /* 80% of window height */
+    height: 40%;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

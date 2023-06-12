@@ -100,7 +100,7 @@ namespace Traffic_CA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerName,Analytical")] Customers customers)
+        public async Task<IActionResult> Create([Bind("Id,CustomerName")] Customers customers)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +132,7 @@ namespace Traffic_CA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,Analytical")] Customers customers)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName")] Customers customers)
         {
             if (id != customers.Id)
             {

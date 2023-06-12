@@ -29,12 +29,6 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Docklots" asp-action="Index">Docklot</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="ReceivingLoads" asp-action="Index">Receiving Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="ReceivingLoads" asp-action="Create">Receiving Schedule New</a>
-                        </li>
                         <li class="navbar-nav dropdown flex">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Maintenance
@@ -52,6 +46,19 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Loads" asp-action="GetDocklotPrint">Print Docklot</a>
                         </li>
+                        <li class="navbar-nav dropdown flex">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Reject Load
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loads" asp-action="RejectStagedLiveParam">Reject Staged Live Load</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loads" asp-action="RejectStagedSpotParam">Reject Staged Spot Load</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loads" asp-action="RejectLiveKeepPullingParam">Reject Live Load but Keep Pulling to Stage</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loads" asp-action="RejectSpotKeepPullingParam">Reject Spot Load but Keep Pulling to Stage</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loads" asp-action="RejectLiveNothingPulledParam">Reject Live Load Nothing Pulled</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loads" asp-action="RejectSpotNothingPulledParam">Reject Spot Load Nothing Pulled</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +72,7 @@
 
     <footer class="border-top footer bg-primary text-light fixed-bottom">
         <div class="container">
-            &copy; 2023 - Traffic Hudson - MGA Entertainment
+            &copy; 2023 - Traffic Hesperia - MGA Entertainment
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -228,6 +235,7 @@
                     second: 'numeric'
                 })
                 $('#loadFinishTime').val(output);
+                $('#loadStatus').val('Loaded');
             });
         });
         $(document).ready(function () {
@@ -243,6 +251,7 @@
                     second: 'numeric'
                 })
                 $('#recLoadLiveStartTime').val(output);
+                $('#recStatus').val('Loaded');
             });
         });
         $(document).ready(function () {

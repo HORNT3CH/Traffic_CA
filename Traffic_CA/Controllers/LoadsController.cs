@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Traffic_CA.Data;
 using Traffic_CA.Models;
+using Microsoft.AspNetCore.Components;
 
 namespace Traffic_Hudson.Controllers
 {
@@ -57,20 +58,18 @@ namespace Traffic_Hudson.Controllers
                 {
                     var searchDates = DateTime.ParseExact(SearchText, "MM/dd/yyyy", CultureInfo.InvariantCulture);
                     loads = _context.Loads
-                    .Where(p => p.OrderDate.Date == searchDates.Date && p.LoadType != "HOTLTL")
-                    .OrderBy(p => p.OrderDate).ThenBy(p => p.ConvertedTimeSlots)
+                    .Where(p => p.OrderDate.Date == searchDates.Date)
                     .ToList();
                 }
                 else
                 {
                     loads = _context.Loads
-                    .Where(p => p.MBOLNbr.Contains(SearchText) || p.LoadNbr.Contains(SearchText) || p.CustomerName.Contains(SearchText) || p.CarrierName.Contains(SearchText) || p.LoadStatus == SearchText && p.LoadType != "HOTLTL")
-                    .OrderBy(p => p.OrderDate).ThenBy(p => p.ConvertedTimeSlots)
+                    .Where(p => p.MBOLNbr.Contains(SearchText) || p.LoadNbr.Contains(SearchText) || p.LoadStatus.Contains(SearchText) || p.CustomerName.Contains(SearchText))
                     .ToList();
                 }
             }
             else
-                loads = _context.Loads.Where(p => p.LoadType != "HOTLTL").ToList();
+                loads = _context.Loads.ToList();
 
             int recsCount = loads.Count();
 
@@ -86,6 +85,7 @@ namespace Traffic_Hudson.Controllers
             return View(retLoads.ToList());
 
         }
+
 
         public async Task<IActionResult> IndexLTL()
         {
@@ -567,6 +567,170 @@ namespace Traffic_Hudson.Controllers
         private bool LoadsExists(int id)
         {
             return (_context.Loads?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        // Load parameter page for Reject Staged Live
+        public ActionResult RejectStagedLiveParam()
+        {
+            return View();
+        }
+
+        private string connectionString = "Server=LT-CLE01715\\SQLEXPRESS;Database=Traffic_CA;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+        public IActionResult RejectStagedLive(String mbolnbr)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_RejectStagedLive", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameter to the command
+                    command.Parameters.AddWithValue("@MBOLNbr", mbolnbr);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Load parameter page for Reject Staged Live
+        public ActionResult RejectStagedSpotParam()
+        {
+            return View();
+        }       
+
+        public IActionResult RejectStagedSpot(String mbolnbr)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_RejectStagedSpot", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameter to the command
+                    command.Parameters.AddWithValue("@MBOLNbr", mbolnbr);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Load parameter page for Reject Spot but Keep Pulling
+        public ActionResult RejectSpotKeepPullingParam()
+        {
+            return View();
+        }
+
+        public IActionResult RejectSpotKeepPulling(String mbolnbr)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_RejectSpotKeepPulling", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameter to the command
+                    command.Parameters.AddWithValue("@MBOLNbr", mbolnbr);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Load parameter page for Reject Live but Keep Pulling
+        public ActionResult RejectLiveKeepPullingParam()
+        {
+            return View();
+        }
+
+        public IActionResult RejectLiveKeepPulling(String mbolnbr)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_RejectLiveKeepPulling", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameter to the command
+                    command.Parameters.AddWithValue("@MBOLNbr", mbolnbr);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Load parameter page for Reject Spot but Keep Pulling
+        public ActionResult RejectSpotNothingPulledParam()
+        {
+            return View();
+        }
+
+        public IActionResult RejectSpotNothingPulled(String mbolnbr)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_RejectSpotNothingPulled", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameter to the command
+                    command.Parameters.AddWithValue("@MBOLNbr", mbolnbr);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Load parameter page for Reject Live but Keep Pulling
+        public ActionResult RejectLiveNothingPulledParam()
+        {
+            return View();
+        }
+
+        public IActionResult RejectLiveNothingPulled(String mbolnbr)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_RejectLiveNothingPulled", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameter to the command
+                    command.Parameters.AddWithValue("@MBOLNbr", mbolnbr);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

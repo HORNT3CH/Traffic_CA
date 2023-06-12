@@ -1,0 +1,38 @@
+﻿@{
+}
+@model Traffic_CA.Models.Loads
+
+@{
+    ViewData["Title"] = "Reject Live Keep Pulling";
+}
+<br />
+
+<h1 class="mt-5">Reject Live Load but Keep Pulling to Stage</h1>
+<p class="text-danger">This is to be used for a live load that was Rejected and Continue Pulling to Stage</p>
+
+<img src="/img/danger.jpg" width="150" />
+
+<h2 class="text-danger mt-2">CAUTION!  THIS CANNOT BE REVERSED!!</h2>
+
+<p>StagerOne will be the LoaderOne as will the StageStart Time.</p>
+<p>This will reset Loaders, Load Start, Load Finish, Door, and Trailer Number Assigned.</p>
+<p>The Dock Door will be made available again and the Live Trailer will be exited from the system.</p>
+<p>The load will be put back in <strong>Created</strong> Status.</p>
+
+<div class="row">
+    <div class="col-md-3">
+        <form asp-action="RejectLiveKeepPulling">
+            <div class="form-group">
+                    <label asp-for="MBOLNbr" class="control-label"></label>
+                    <input asp-for="MBOLNbr" class="form-control" placeholder="Enter MBOLNbr to Reject"/>
+                    <span asp-validation-for="MBOLNbr" class="text-danger"></span>
+                </div>
+            <button type="submit" class="btn btn-success mt-2">I'm Sure, Reject Trailer</button>
+        </form>
+        <div>
+            <a class="btn btn-danger mt-2" asp-controller="Home" asp-action="Index">Cancel</a>
+        </div>
+    </div>
+</div>
+
+
